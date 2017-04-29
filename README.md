@@ -69,57 +69,46 @@ sk.certification=PGPSignature.POSITIVE_CERTIFICATION
 sk.keyFlags=KeyFlags.CERTIFY_OTHER,KeyFlags.SIGN_DATA
 sk.keyFlags.mandatory=false
 sk.primaryUserId=true
-sk.primaryUserId.mandatory=true
-sk.trustSignature.value=3
-sk.trustSignature.depth=0
-sk.trustSignature.mandatory=true
-sk.prefs.encAlgs=SymmetricKeyAlgorithmTags.AES_256, SymmetricKeyAlgorithmTags.AES_192, SymmetricKeyAlgorithmTags.TRIPLE_DES 
-sk.prefs.encAlgs.mandatory=false
-sk.prefs.hashAlgs=HashAlgorithmTags.SHA512, HashAlgorithmTags.SHA384, HashAlgorithmTags.SHA256,HashAlgorithmTags.SHA1, HashAlgorithmTags.RIPEMD160
-sk.prefs.hashAlgs.mandatory=false
-sk.prefs.comprAlgs=CompressionAlgorithmTags.ZLIB, CompressionAlgorithmTags.BZIP2, CompressionAlgorithmTags.ZIP
-sk.prefs.comprAlgs.mandatory=false
-;sk.feature=Features.FEATURE_MODIFICATION_DETECTION
-;sk.feature.mandatory=false
-
-; Encryption Key Properties
-ek.certification=PGPSignature.POSITIVE_CERTIFICATION
-ek.keyFlags=KeyFlags.ENCRYPT_COMMS,KeyFlags.ENCRYPT_STORAGE
-ek.keyFlags.mandatory=false
-ek.primaryUserId=true
-ek.primaryUserId.mandatory=true
-ek.trustSignature.value=3
-ek.trustSignature.depth=0
-ek.trustSignature.mandatory=true
-ek.prefs.encAlgs=SymmetricKeyAlgorithmTags.AES_256, SymmetricKeyAlgorithmTags.AES_192, SymmetricKeyAlgorithmTags.TRIPLE_DES 
-ek.prefs.encAlgs.mandatory=false
-ek.prefs.hashAlgs=HashAlgorithmTags.SHA512, HashAlgorithmTags.SHA384, HashAlgorithmTags.SHA256,HashAlgorithmTags.SHA1, HashAlgorithmTags.RIPEMD160
-ek.prefs.hashAlgs.mandatory=false
-ek.prefs.comprAlgs=CompressionAlgorithmTags.ZLIB, CompressionAlgorithmTags.BZIP2, CompressionAlgorithmTags.ZIP
-ek.prefs.comprAlgs.mandatory=false
-;ek.feature=Features.FEATURE_MODIFICATION_DETECTION
-;ek.feature.mandatory=false
-
-; Authentication Key Properties
-ak.certification=PGPSignature.POSITIVE_CERTIFICATION
-ak.keyFlags=KeyFlags.AUTHENTICATION
-ak.keyFlags.mandatory=false
-ak.primaryUserId=true
-ak.primaryUserId.mandatory=true
-;ak.trustSignature.value=3
-;ak.trustSignature.depth=0
-;ak.trustSignature.mandatory=true
-ak.prefs.encAlgs=SymmetricKeyAlgorithmTags.AES_256, SymmetricKeyAlgorithmTags.AES_192, SymmetricKeyAlgorithmTags.TRIPLE_DES 
-ak.prefs.encAlgs.mandatory=false
-ak.prefs.hashAlgs=HashAlgorithmTags.SHA512, HashAlgorithmTags.SHA384, HashAlgorithmTags.SHA256,HashAlgorithmTags.SHA1, HashAlgorithmTags.RIPEMD160
-ak.prefs.hashAlgs.mandatory=false
-;ak.prefs.comprAlgs=CompressionAlgorithmTags.ZLIB, CompressionAlgorithmTags.BZIP2, CompressionAlgorithmTags.ZIP
-;ak.prefs.comprAlgs.mandatory=false
-;ak.feature=Features.FEATURE_MODIFICATION_DETECTION
+...
 
 ```
+To load the OpenPGP key pair on the token run:
+```
+gpg2 --import [fingerprint_sec.bpg]
+gpg2 --import [fingerprint_pub.bpg]
+gpg2 --edit-key [fingerprint]
+  toggle
+  keytocard
+```
 
+If you import the public key you can sync (this will generate the private key stub) your smartcard with:
+```
+gpg2 --import [fingerprint_pub.bpg]
+gpg2 --card-status
+```
+
+Possible errors:
+ - I you should get the error "gpg: KEYTOCARD failed: Unusable secret key" you need to delete the private key stub under "~/.gnupg/private-keys-v1.d/[fingerprint.key]" first.
 
 
  
+Import certificate on OpenPGP compliant token:
+```
+pkcs15-init --verify-pin --store-certificate [pem encoded certificate] --auth-id 3 --id 3
+```
+or you can import the whole pkcs12 (private key, public key, X509 certificate):
+```
+pkcs15-init --delete-objects privkey,pubkey --id 3 --store-private-key [auth.p12] --format pkcs12 --auth-id 3 --verify-pin
+```
+
+Import certificate on yubico token:
+``` 
+yubico-piv-tool -s 9a -a import-certificate -i [auth.p12] -p [password]
+```
+
+To make your token available to PKCS11 compliant applications an OpenPGP card compliant PKCS11 library has to be provided. I'm using the opensc-pkcs11 library from the [OpenSC project](https://github.com/OpenSC/OpenSC).
+E.g. to use the token with firefox:
+ - Open "Preferences" > Advanced > Security Devices
+ - Click "Load"
+ - Choose and name for the module e.g. OpenSC and the path to the opensc-pkcs11 library (e.g. on my linux "/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so", on my OSX "/opt/local/lib/opensc-pkcs11.so"). 
   
