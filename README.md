@@ -1,7 +1,7 @@
 # PKCS12Converter
 PKCS12Converter is a quick hack to convert a PKCS12 key pair into a OpenPGP key pair defined in RFC 4880. 
 Provided one PKCS12 key pair it will generate one OpenPGP public and one OpenPGP secret key.
-If provided a "master key pair" and a second PKCS12 key pair, it will construct a key ring with the OpenPGP "master key pair" and a sub key. The key properties are defined in the KeySettings.prperties file. There are 4 categories predefined: The master, sining, encryption and authentication key pair.
+If provided a "master key pair" and a second PKCS12 key pair, it will construct a key ring with the OpenPGP "master key pair" and a sub key. The key properties are defined in the KeySettings.prperties file. There are 4 categories predefined: The master, signing, encryption and authentication key pair.
 
 ## Why?
 I'm using X509 certificates for authentication (mutual ssl/tls client certificate based authentication)  and encryption/signing in the area of secure email communication (S/MIME).
@@ -12,7 +12,7 @@ The private keys and the certificates can be load on the card for the dual usage
 
 ## Build
 Retrieve the source from the git repository:
-  git clone https://
+  git clone https://github.com/Myonium/PKCS12Converter.git
 
 Build the project with gradle:
   gradle build
