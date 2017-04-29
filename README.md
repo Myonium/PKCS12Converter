@@ -8,7 +8,7 @@ I'm using X509 certificates for authentication (mutual ssl/tls client certificat
 On the other hand I'm using GnuPG key pairs for the ssh authentication and encrypting and signing data.
 The target was to have one smart card (OpenPGP card) for both worlds. 
 For me it turned out, to be the easiest way to generate PKCS12 key pairs with X509 certificates. The These can be converted to OpenPGP key pairs. The OpenPGP key pairs and PKCS12 key pairs with X509 certificates are bases on the very same RSA key pair.
-The private keys and the certificates can be load on the card for the dual usage.
+The private keys and the certificates can be load on the card for dual usage.
 
 ## Build
 Retrieve the source from the git repository:
@@ -81,14 +81,14 @@ gpg2 --edit-key [fingerprint]
   keytocard
 ```
 
-If you import the public key you can sync (this will generate the private key stub) your smartcard with:
+When the public key is imported to gnupg you can sync with your smartcard to make gnupg aware of the private key on your card. This will generate the private key stub:
 ```
 gpg2 --import [fingerprint_pub.bpg]
 gpg2 --card-status
 ```
 
 Possible errors:
- - I you should get the error "gpg: KEYTOCARD failed: Unusable secret key" you need to delete the private key stub under "~/.gnupg/private-keys-v1.d/[fingerprint.key]" first.
+ - If you should get the error "gpg: KEYTOCARD failed: Unusable secret key" the key was already sync'ed. Delete the private key stub under "~/.gnupg/private-keys-v1.d/[fingerprint.key]" to be able to import the private key.
 
 
  
@@ -106,8 +106,8 @@ Import certificate on yubico token:
 yubico-piv-tool -s 9a -a import-certificate -i [auth.p12] -p [password]
 ```
 
-To make your token available to PKCS11 compliant applications an OpenPGP card compliant PKCS11 library has to be provided. I'm using the opensc-pkcs11 library from the [OpenSC project](https://github.com/OpenSC/OpenSC).
-E.g. to use the token with firefox:
+To make your token available to PKCS11 compliant applications, you have to provide them PKCS11 library which understands your token. I'm using the opensc-pkcs11 library from the [OpenSC project](https://github.com/OpenSC/OpenSC).
+E.g. to use the token with Firefox:
  - Open "Preferences" > Advanced > Security Devices
  - Click "Load"
  - Choose and name for the module e.g. OpenSC and the path to the opensc-pkcs11 library (e.g. on my linux "/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so", on my OSX "/opt/local/lib/opensc-pkcs11.so"). 
