@@ -8,7 +8,7 @@ I'm using X509 certificates for authentication (mutual ssl/tls client certificat
 On the other hand I'm using GnuPG key pairs for the ssh authentication and encrypting and signing data.
 The target was to have one smart card (OpenPGP card) for both worlds. 
 For me it turned out, to be the easiest way to generate PKCS12 key pairs with X509 certificates. The These can be converted to OpenPGP key pairs. The OpenPGP key pairs and PKCS12 key pairs with X509 certificates are bases on the very same RSA key pair.
-The private keys and the certificates can be load on the card for dual usage.
+The private keys and the certificates can be load on the smart card for dual usage.
 
 ## Build
 Retrieve the source from the git repository:
