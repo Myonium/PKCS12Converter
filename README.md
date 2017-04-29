@@ -29,7 +29,7 @@ java -jar PKCS12Converter.jar --date '2017-04-24 22:00:00' --type authentication
 ```
 
 Note there are 3 predefined templates for the key signatures:
- - auth(thenticaion) for authentication key pairs
+ - auth(enticaion) for authentication key pairs
  - sig(ning) for signing key pairs
  - enc(ryption) for encryption keys
 All key properties are in the KeySettings.properties file defined. You can generate your own properties file or adapt the properties to your needs.
