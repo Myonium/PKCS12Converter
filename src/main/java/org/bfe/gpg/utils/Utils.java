@@ -223,12 +223,12 @@ public abstract class Utils {
 			out = new FileOutputStream(filename);
 			keyPair.getPublicKey().encode(out);
 			out.close();
-			System.out.println(String.format("Exporting %s to '%s'", "private key", filename));
+			System.out.println(String.format("Exporting %s to '%s'", "public key", filename));
 			//write secret key
 			filename = fingerprint + "_sec.bpg";
 			out = new FileOutputStream(filename);
 			keyPair.encode(out);
-			System.out.println(String.format("Exporting %s to '%s'", "public key", filename));
+			System.out.println(String.format("Exporting %s to '%s'", "private key", filename));
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
