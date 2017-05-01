@@ -7,7 +7,7 @@ If provided a "master key pair" in addition to the PKCS12 key pair, it will cons
 I'm using X509 certificates for authentication (mutual ssl/tls client certificate based authentication)  and encryption/signing in the area of secure email communication (S/MIME).
 On the other hand I'm using GnuPG key pairs for the ssh authentication and encrypting and signing data.
 The target was to have one smart card (OpenPGP card) for both worlds. 
-For me it turned out, to be the easiest way to generate PKCS12 key pairs with X509 certificates. The These can be converted to OpenPGP key pairs. The OpenPGP key pairs and PKCS12 key pairs with X509 certificates are bases on the very same RSA key pair.
+For me it turned out, to be the easiest way to generate PKCS12 key pairs with X509 certificates. The These can be converted to OpenPGP key pairs. The OpenPGP key pairs and PKCS12 key pairs with X509 certificates are based on the very same RSA key pair.
 The private keys and the certificates can be load on the smart card for dual usage.
 
 ## Build
@@ -32,6 +32,7 @@ Note there are 3 predefined templates for the key signatures:
  - auth(enticaion) for authentication key pairs
  - sig(ning) for signing key pairs
  - enc(ryption) for encryption keys
+ 
 All key properties are in the KeySettings.properties file defined. You can generate your own properties file or adapt the properties to your needs.
 
 In case you want generate a key ring with sub keys run the converter as follows: 
