@@ -43,7 +43,7 @@ Sample for a key ring with sub key:
 ```
 java -jar PKCS12Converter.jar --date '2017-04-24 22:00:00' --masterkey master.p12 --type auth --in auth.p12 --uid Myonium
 ```
-In this sample "auth.p12" will become the sub key of master.p12. The master key has its own key setting, which are also defined in KeySettings.properties:
+In this sample "auth.p12" will become the sub key of "master.p12". The master key has its own key setting, which are also defined in KeySettings.properties:
 ```
 ; General Setting
 keyring.s2kcount=250
