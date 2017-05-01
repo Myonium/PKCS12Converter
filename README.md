@@ -1,7 +1,7 @@
 # PKCS12Converter
 PKCS12Converter is a quick hack to convert a PKCS12 key pair into a OpenPGP key pair defined in RFC 4880. 
 A PKCS12 key pair will be converted into a OpenPGP public and one OpenPGP secret key.
-If provided a "master key pair" in addition to the PKCS12 key pair, it will construct a key ring with the OpenPGP "master key pair" and a sub key. The key properties are defined in the KeySettings.prperties file. There are 4 categories predefined: The master, signing, encryption and authentication key pair.
+If provided a "master key pair" in addition to the PKCS12 key pair, it will construct a key ring with the OpenPGP "master key pair" and a sub key. 
 
 ## Why?
 I'm using X509 certificates for authentication (mutual ssl/tls client certificate based authentication)  and encryption/signing in the area of secure email communication (S/MIME).
@@ -27,13 +27,15 @@ To convert a single PKCS12 file into a OpenPGP key pair run:
 ```
 java -jar PKCS12Converter.jar --date '2017-04-24 22:00:00' --type authentication --in auth.p12
 ```
+## Key Signatures 
+The key properties are defined in the KeySettings.prperties file. There are 4 categories predefined: The master, signing, encryption and authentication key pair.
 
-Note there are 3 predefined templates for key signatures:
+For the conversion you have to define which type of template to use:
  - auth(enticaion) for authentication key pairs
  - sig(ning) for signing key pairs
  - enc(ryption) for encryption keys
  
-All key properties are in the KeySettings.properties file defined. You can generate your own properties file or adapt the properties to your needs.
+You can modify the KeySettings.properties or you can generate your own properties file to adapt the properties to your needs.
 
 In case you want generate a key ring with sub keys run the converter as follows: 
 
