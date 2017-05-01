@@ -28,7 +28,7 @@ To convert a single PKCS12 file into a OpenPGP key pair run:
 java -jar PKCS12Converter.jar --date '2017-04-24 22:00:00' --type authentication --in auth.p12
 ```
 
-Note there are 3 predefined templates for the key signatures:
+Note there are 3 predefined templates for key signatures:
  - auth(enticaion) for authentication key pairs
  - sig(ning) for signing key pairs
  - enc(ryption) for encryption keys
